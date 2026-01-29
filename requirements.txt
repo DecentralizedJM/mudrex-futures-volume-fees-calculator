@@ -1,0 +1,2 @@
+# Mudrex SDK - install from GitHub (aligns with https://github.com/DecentralizedJM/mudrex-api-trading-python-sdk)
+mudrex-trading-sdk @ git+https://github.com/DecentralizedJM/mudrex-api-trading-python-sdk.git
