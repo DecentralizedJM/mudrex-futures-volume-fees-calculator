@@ -25,9 +25,10 @@ wheels/
 venv/
 ENV/
 
-# IDE
+# IDE / debug
 .idea/
 .vscode/
+.cursor/
 *.swp
 *.swo
 

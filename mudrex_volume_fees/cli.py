@@ -26,12 +26,12 @@ def main() -> int:
     parser.add_argument(
         "--since",
         metavar="DATE",
-        help="Start date (YYYY-MM-DD or ISO datetime)",
+        help="Start date in IST (YYYY-MM-DD or ISO datetime)",
     )
     parser.add_argument(
         "--until",
         metavar="DATE",
-        help="End date (YYYY-MM-DD or ISO datetime)",
+        help="End date in IST (YYYY-MM-DD or ISO datetime)",
     )
     parser.add_argument(
         "--symbol",
@@ -83,8 +83,8 @@ def main() -> int:
         limit=args.limit,
     )
 
-    print("Mudrex Futures Volume & Fees Report")
-    print("------------------------------------")
+    print("Mudrex Futures Volume & Fees Report (all times IST)")
+    print("----------------------------------------------------")
     if args.since or args.until:
         print(f"  Period: {args.since or 'start'} to {args.until or 'now'}")
     if args.symbol:
@@ -93,12 +93,16 @@ def main() -> int:
     print(f"  Order count: {report['order_count']}")
     print(f"  Total volume (notional): ${report['total_volume']:,.2f}")
     print(f"  Estimated fees: ${report['estimated_fees']:,.2f}")
+    if "actual_fees" in report:
+        print(f"  Actual fees (from API): ${report['actual_fees']:,.2f} ({report.get('actual_fee_count', 0)} records)")
     if report.get("by_symbol"):
         print("  By symbol:")
         for sym, vol in sorted(report["by_symbol"].items(), key=lambda x: -x[1]):
             print(f"    {sym}: ${vol:,.2f}")
     if not report.get("source_available"):
         print("  Note: Order source not in API response; all filled orders in range were counted.")
+    if (args.since or args.until) and report["order_count"] == 0:
+        print("  Tip: If you expected orders, try a different date range (API uses UTC; report is IST).")
     return 0
 
 

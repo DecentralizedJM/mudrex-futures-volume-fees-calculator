@@ -63,7 +63,8 @@ report = calc.calculate(
 print(report["total_volume"])    # notional volume in USD
 print(report["estimated_fees"]) # fees at your alpha tier
 print(report["order_count"])
-print(report["by_symbol"])      # volume per symbol
+print(report["by_symbol"])       # volume per symbol
+# When include_actual_fees=True (default), report also has actual_fees, actual_fee_count from fee history
 ```
 
 ## Alpha tiers
